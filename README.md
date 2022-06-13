@@ -1,4 +1,4 @@
-# ![](https://media.discordapp.net/attachments/899139591624331284/985866105056804874/IMG_1153.png)<br/>Project Useless
+# ![](https://media.discordapp.net/attachments/835778655527370763/985869631635984404/IMG_1154.png)<br/>Project Useless
 ### 쓸모없는 작품.
 저희가 추구하는 작품입니다.  
 저희는 쓸모없는 작품만 만듭니다.  
