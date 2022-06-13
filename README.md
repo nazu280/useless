@@ -6,5 +6,5 @@
 ### Useless work.
 This is the work we are pursuing.  
 We only make useless things.  
-[깃허브 페이지 방문하기](https://github.com/nazu280/useless)<br/><br/>
+[GitHub page](https://github.com/nazu280/useless)<br/><br/>
 #### coming soon.
