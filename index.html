@@ -4,60 +4,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
     
     <title>Project Useless</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">
     <style type="text/css">
-        html,body{ margin:0; padding:0; width:100%;  overflow-x:hidden; height:100%; font-family: 'Nanum Gothic', sans-serif;}
-        .box{width:100%; height:100%; position:relative; color:#000000; font-size:12pt; display:flex; justify-content:center; align-items:center; position:relative; @media (min-width: 768px){font-size:20px;}}
-        a{color:#0366D6; text-decoration:none;}
-        a:hover{text-decoration:underline;}
-        .s{position:absolute; top:90%; width:100%;}
+        html, body {width: 100%; height: 100%;}
+        .content{
+            height: 100vh;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
-        window.onload = function () {
-            var elm = ".box";
-            $(elm).each(function (index) {
-                $(this).on("mousewheel DOMMouseScroll", function (e) {
-                    e.preventDefault();
-                    var delta = 0;
-                    if (!event) event = window.event;
-                    if (event.wheelDelta) {
-                        delta = event.wheelDelta / 120;
-                        if (window.opera) delta = -delta;
-                    } 
-                    else if (event.detail)
-                        delta = -event.detail / 3;
-                    var moveTop = $(window).scrollTop();
-                    var elmSelecter = $(elm).eq(index);
-                    if (delta < 0) {
-                        if ($(elmSelecter).next() != undefined) {
-                            try{
-                                moveTop = $(elmSelecter).next().offset().top;
-                            }catch(e){}
-                        }
-                    } else {
-                        if ($(elmSelecter).prev() != undefined) {
-                            try{
-                                moveTop = $(elmSelecter).prev().offset().top;
-                            }catch(e){}
-                        }
-                    }
-                     
-                    $("html,body").stop().animate({
-                        scrollTop: moveTop + 'px'
-                    }, {
-                        duration: 800, complete: function () {
-                        }
-                    });
-                });
-            });
-        }
+        window.addEventListener("wheel", function(e){
+       	    e.preventDefault();
+        },{passive : false});
+
+
+        var $html = $("html");
+        var page = 1;
+        var lastPage = $(".content").length;
+
+        $html.animate({scrollTop:0},10);
+
+
+        $(window).on("wheel", function(e){
+ 
+   	    if($html.is(":animated")) return;
+ 
+	    if(e.originalEvent.deltaY > 0){
+                if(page== lastPage) return;
+ 
+		    page++;
+	    }else if(e.originalEvent.deltaY < 0){
+		if(page == 1) return;
+ 
+		    page--;
+	    }
+	    var posTop = (page-1) * $(window).height();
+ 
+	    $html.animate({scrollTop : posTop});
+ 
+        });
+
     </script>
 </head>
-<body >
-    <div class="box">
+<body>
+    <!--<div class="box">
       <img src="https://media.discordapp.net/attachments/835778655527370763/985869631635984404/IMG_1154.png" alt="Useless">
       <div class="s" align="center">Scroll<br>﹀</div>
     </div>
@@ -65,5 +54,11 @@
       <div class="in"><h1>Project Useless</h1><p><b>쓸모없는 작품.</b><br>저희가 추구하는 작품입니다.<br>저희는 쓸모없는 작품만 만듭니다.<br><a href="https://github.com/nazu280/useless">깃허브 페이지</a><br><a href="https://discord.gg/pjQubsz4bs">디스코드</a></p></div><div class="in"></div>
     </div>
     <div class="box"><p>Coming Soon.</p></div>
+    -->
+    <div>
+        <div class="content">1</div>
+        <div class="content">2</div>
+        <div class="content">3</div>
+    </div>
 </body>
 </html>
