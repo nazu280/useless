@@ -1,5 +1,11 @@
 *{margin:0;padding:0}
-html, body{}
+body{
+ -ms-overflow-style: none;
+ }
+ 
+::-webkit-scrollbar {
+  display: none;
+}
 ul, ol{list-style:none}
 .header{position:fixed;z-index:10;top:0;width:100%}
 .header ul:after{content:"";display:block;clear:both}
