@@ -4,79 +4,51 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="style.css">
 		<script>
-			var scroll = function(){
-    
-				var $nav = null,
-						$cnt = null,
-						moveCnt = null,
-						moveIndex = 0,
-						moveCntTop = 0,
-						winH = 0,
-						time = false; // 새로 만든 변수
+			var sectionWrap = $('#wrap');
+			var section = $('.section');
+			var sectionLen = section.length;
+			var winHei = $(window).height();
+			var idx = 0;
+			var state = false;
 
-				$(document).ready(function(){
-						init();
-						initEvent();
-				});
+			section.css({'height': winHei});
+			section.on('mousewheel DOMMouseScroll', mouseWheel);
 
-				var init = function(){
-						$cnt = $(".content");
-						$nav = $(".header a");
-				};
+			function mouseWheel(){
 
-				var initEvent = function(){
-						$("html ,body").scrollTop(0);
-						winResize();
-						$(window).resize(function(){
-								winResize();
-						});
-						$nav.on("click", function(){
-								moveIndex = $(this).parent("li").index();
-								moving(moveIndex);
-								return false;
-						});
-						$cnt.on("mousewheel", function(e){
-								if(time === false){ // time 변수가 펄스일때만 휠 이벤트 실행
-									wheel(e);
-								}
-						});
-				};
+				if( state ) return;
 
-				var winResize = function(){
-						winH = $(window).height();
-						$cnt.children("div").height(winH);
-						$("html ,body").scrollTop(moveIndex.scrollTop);
-				};
+				var delta = window.event.deltaY;
+				var deltaFireFox = window.event.detail;
 
-				var wheel = function(e){
-						if(e.originalEvent.wheelDelta < 0){
-								if(moveIndex < 3){
-										moveIndex += 1;
-										moving(moveIndex);
-								};
-						}else{
-								if(moveIndex > 0){
-										moveIndex -= 1;
-										moving(moveIndex);
-								};
-						};
-				};
+				( delta > 0 || deltaFireFox > 0 ) ? idx++ : idx --;
 
-				var moving = function(index){
-						time = true // 휠 이벤트가 실행 동시에 true로 변경
-						moveCnt = $cnt.children("div").eq(index);
-						moveCntTop = moveCnt.offset().top;
-						$("html ,body").stop().animate({
-								scrollTop: moveCntTop
-						}, 1000, function(){
-							time = false; // 휠 이벤트가 끝나면 false로 변경
-						});
-						$nav.parent("li").eq(index).addClass("on").siblings().removeClass("on");
-				};
+				indexChk( idx );
+			}
 
-		};
+			function indexChk( $idx ){
+				console.log( $idx, sectionLen )
+				if( $idx < 0 ){
+					idx = 0;
+					return;
+				}else if( $idx == sectionLen ){
+					idx = sectionLen-1;
+					return;
+				}
+				// 섹션의 처음이나 끝일 때는 이벤트 리턴
+				state = true; // 스크롤 연속으로 했을때 빠르게 넘어가는 걸 막기위함
+				showSection( $idx );
 
-		scroll();
+			}
+
+			function showSection( $idx ){
+
+				var posY = -( winHei * $idx );
+				TweenMax.to( sectionWrap, 0.6, { top: posY, ease: Power4.easeInOut, onComplete:function(){
+					state = false; // 애니메이션이 끝나면 다시 스크롤이 되도록 함
+				} } );
+
+			}
 		</script>
 	</head>
 	<body>
